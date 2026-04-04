@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500&display=swap');
+@import "tailwindcss";
+
+
+/* ── Font families ── */
+.font-display { font-family: 'Clash Display', sans-serif; }
+.font-body    { font-family: 'General Sans', sans-serif; }
+.font-mono    { font-family: 'JetBrains Mono', monospace; }
+/* ── CSS Variables ── */
+:root {
+  --accent:       #E8FF47;
+  --accent-dim:   rgba(232,255,71,0.12);
+  --accent-glow:  rgba(232,255,71,0.28);
+  --teal:         #4ecdc4;
+  --purple:       #c77dff;
+  --coral:        #ff6b6b;
+  --orange:       #ff9a3c;
+  --pink:         #f9a8d4;
+  --blue:         #60a5fa;
+  --bg:           #060608;
+  --bg-card:      rgba(255,255,255,0.03);
+  --bg-hover:     rgba(255,255,255,0.055);
+  --border:       rgba(255,255,255,0.07);
+  --border-accent:rgba(232,255,71,0.2);
+  --text:         #F2F2F0;
+  --text-sub:     rgba(242,242,240,0.44);
+  --text-muted:   rgba(242,242,240,0.22);
+}
+
+/* ── Keyframes ── */
+@keyframes fadeUp  { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:translateY(0); } }
+@keyframes shimmer { 0% { background-position:-300% center; } 100% { background-position:300% center; } }
+@keyframes spin    { to { transform:rotate(360deg); } }
+@keyframes ticker  { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+@keyframes pdot    { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.35; transform:scale(.6); } }
+@keyframes wave    { 0%,100% { transform:scaleY(.2); } 50% { transform:scaleY(1); } }
+@keyframes floatY  { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-14px); } }
+@keyframes glowPulse { 0%,100% { opacity:.5; } 50% { opacity:1; } }
+
+/* ── Animation utilities ── */
+.anim-up { animation: fadeUp .75s cubic-bezier(.22,1,.36,1) both; }
+.d1 { animation-delay:.09s; } .d2 { animation-delay:.18s; }
+.d3 { animation-delay:.27s; } .d4 { animation-delay:.36s; }
+.d5 { animation-delay:.45s; }
+
+/* ── Accent shimmer text ── */
+.accent-shimmer {
+  background: linear-gradient(90deg, var(--accent), #fff, var(--teal), var(--accent));
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ── Glass morphism ── */
+.glass {
+  background: rgba(6,6,8,0.72);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid var(--border-accent);
+}
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  transition: background .3s ease, border-color .3s ease, transform .3s ease;
+}
+.glass-card:hover {
+  background: var(--bg-hover);
+}
+
+/* ── Buttons ── */
+.btn-accent {
+  background: var(--accent);
+  color: #060608;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+  box-shadow: 0 4px 24px var(--accent-glow);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(232,255,71,0.42);
+}
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border-accent);
+  color: rgba(232,255,71,0.8);
+  cursor: pointer;
+  transition: all .25s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.btn-ghost:hover {
+  background: var(--accent-dim);
+  border-color: rgba(232,255,71,0.55);
+  color: var(--accent);
+}
+
+/* ── Nav link ── */
+.nav-lnk {
+  color: var(--text-sub);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color .2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+}
+.nav-lnk:hover, .nav-lnk.active { color: var(--accent); }
+
+/* ── Cards ── */
+.card-lift { transition: transform .35s ease, box-shadow .35s ease; }
+.card-lift:hover { transform: translateY(-6px); }
+
+.track-row  { transition: background .2s; }
+.track-row:hover { background: rgba(232,255,71,0.05) !important; }
+
+.genre-card { transition: transform .25s ease, border-color .25s ease; }
+.genre-card:hover { transform: translateY(-4px) scale(1.02); }
+
+.artist-card { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.artist-card:hover { transform: translateY(-6px); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(232,255,71,0.18); border-radius: 4px; }
