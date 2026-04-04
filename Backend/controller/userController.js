@@ -10,7 +10,7 @@ dotenv.config();
 
 export const registerUser = async (req,res)=>{
    try {
-     const {userName,email,password,phoneNumber,avatar,role}=req.body;
+     const {userName,email,password,phoneNumber,avatar}=req.body;
     if(!userName || !email || !password){
         return res.status(400).json({
             success:false,
@@ -40,7 +40,7 @@ export const registerUser = async (req,res)=>{
         password:hashPassword,
         phoneNumber,
         avatar,
-        role
+      
     })
 
     const token=jwt.sign({
@@ -103,9 +103,9 @@ export const logIn=async (req,res)=>{
 
      res.cookie("token", token, {
       httpOnly: true,           
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,  
-      sameSite: "lax"      
+      sameSite: "none"      
     });
     return res.status(200).json({
         success:true,
@@ -143,16 +143,16 @@ export const resetPasssword=async (req,res)=>{
                 message:"Invalid Password"
             })
         }
-res.clearCookie("token");
+res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "none" });
         const hashPassword=await bcrypt.hash(newPassword,10);
         user.password=hashPassword;
         await user.save();
         const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
 res.cookie("token", token, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
+  secure: true,
   maxAge: 7 * 24 * 60 * 60 * 1000,
-  sameSite: "lax"
+  sameSite: "none"
 });
          return res.status(200).json({
                 success:true,
@@ -170,7 +170,7 @@ res.cookie("token", token, {
 
 export const logOut=async(req,res)=>{
    try {
-     res.clearCookie("token");
+     res.clearCookie("token",{ httpOnly: true, secure: true, sameSite: "none" });
     res.status(200).json({
         success:true,
         message:"Logged Out successfully."
@@ -217,7 +217,7 @@ export const deleteUser=async(req,res)=>{
        }
       await PlayList.deleteMany({user:user._id});
         await User.findByIdAndDelete(user._id);
-       res.clearCookie("token")
+       res.clearCookie("token",{ httpOnly: true, secure: true, sameSite: "none" })
           return res.status(200).json({
                 success:true,
                 message:"Account Deleted successfully."
