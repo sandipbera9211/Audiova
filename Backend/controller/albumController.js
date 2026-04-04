@@ -7,13 +7,7 @@ import mongoose from "mongoose";
 export const allAlbum=async(req,res)=>{
     try {
         const albumall=await Album.find().populate("artist","name image");
-          if(albumall.length===0){
-             return res.status(404).json({
-         success:false,
-         message:"there is no Album.",
-        albumall
-       })
-          }
+
      return res.status(200).json({
          success:true,
          message:"Album fetched successfully.",

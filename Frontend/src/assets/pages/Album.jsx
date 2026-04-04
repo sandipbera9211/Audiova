@@ -23,6 +23,9 @@ export default function Album() {
         const res  = await fetch(`${import.meta.env.VITE_API_URL}/api/album`, {
           credentials: "include",
         });
+        if (!res.ok) {
+  throw new Error("Failed to fetch albums");
+}
         const data = await res.json();
         const list = data.albumall ?? [];
         setAlbums(list);
